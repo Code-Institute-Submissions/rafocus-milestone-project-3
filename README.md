@@ -13,3 +13,14 @@ A user can use the website in the following scenarios:
 - Edit or delete an exiting recipe already created by the user.
 - View the list of recipes available on the website including the ones shared by other users. 
 
+### Wireframes: 
+
+Home page view:
+
+<img src="wireframes/1.png" alt="home" height="300"/> 
+
+Recipe detail view:
+
+<img src="wireframes/2.png" alt="detail" height="300"/>
+
+
