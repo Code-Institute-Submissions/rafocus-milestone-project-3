@@ -1,4 +1,13 @@
 {% extends "main.html" %}
 {% block content %}
-<h1>Home Page</h1>
+    {% for recipe in recipes %}
+        <div class="card" style="width: 18rem;">
+                <img src="{{ recipe.picture }}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">{{ recipe.name }}</h5>
+                  <p class="card-text">{{ recipe.description }}</p>
+                  <a href="#" class="btn btn-primary">Details</a>
+                </div>
+              </div>
+    {% endfor %}
 {% endblock content %}
