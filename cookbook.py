@@ -35,19 +35,25 @@ def about():
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
-    form = RegistrationForm()
+    form = RegisterForm()
     if form.validate_on_submit():
         flash(f'Account created for {form.username.data}', 'success')
         return redirect(url_for('home'))
     return render_template('register.html', form=form)
 
-@app.route("/login")
+@app.route("/login", methods=['GET', 'POST'])
 def login():
     form = LoginForm()
+    if form.validate_on_submit():
+        if form.email.data == 'user@email.com' and form.password.data == 'password':
+            flash('Logged in', 'success')
+            return redirect(url_for('home'))
+        else:
+            flash('Please check your login credentials', 'danger')
     return render_template('login.html', form=form)
 
 # registration form fields
-class RegistrationForm(FlaskForm):
+class RegisterForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=2, max=15)])
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
@@ -56,7 +62,6 @@ class RegistrationForm(FlaskForm):
 
 # login form fields
 class LoginForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired(), Length(min=2, max=15)])
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     remember = BooleanField('Remember me')
