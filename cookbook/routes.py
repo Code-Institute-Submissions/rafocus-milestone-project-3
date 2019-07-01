@@ -1,6 +1,6 @@
 from flask import Flask, render_template, url_for, flash, redirect
 from cookbook import app, db, bcrypt
-from cookbook.forms import RegisterForm, LoginForm
+from cookbook.forms import RegisterForm, LoginForm, RecipeForm
 from cookbook.models import User, Recipe
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -69,3 +69,15 @@ def logout():
 @login_required # decorator to restrict access to this route
 def myaccount():
     return render_template('myaccount.html')
+
+@app.route("/recipe/new", methods=['GET', 'POST'])
+@login_required
+def new_recipe():
+    form = RecipeForm()
+    if form.validate_on_submit():
+        recipe = Recipe(title=form.title.data, description=form.description.data, author=current_user)
+        db.session.add(recipe)
+        db.session.commit()
+        flash('New Recipe Created', 'success')
+        return redirect(url_for('home'))
+    return render_template('new_recipe.html', form=form)
