@@ -1,1 +1,1 @@
-web: python cookbook.py
+web: gunicorn cookbook:app

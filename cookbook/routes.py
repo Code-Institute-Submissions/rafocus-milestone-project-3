@@ -1,12 +1,8 @@
-import os
 from flask import Flask, render_template, url_for, flash, redirect
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
-from wtforms.validators import DataRequired, Length, Email, EqualTo
+from cookbook import app
+from cookbook.forms import RegisterForm, LoginForm
+from cookbook.models import User, Recipe
 
-app = Flask(__name__)
-
-app.config['SECRET_KEY'] = '0987ads0f987asd0987a0s9d8fa0s98d'
 
 recipes = [
     {
@@ -52,23 +48,3 @@ def login():
         else:
             flash('Please check your login credentials', 'danger')
     return render_template('login.html', form=form)
-
-# registration form fields
-class RegisterForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired(), Length(min=2, max=15)])
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
-    submit = SubmitField('Register')
-
-# login form fields
-class LoginForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    remember = BooleanField('Remember me')
-    submit = SubmitField('Login')
-
-if __name__ == '__main__':   
-    app.run(host=os.environ.get("IP"),
-    port=int(os.environ.get("PORT")),
-debug=True)
