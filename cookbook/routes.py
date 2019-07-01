@@ -1,7 +1,8 @@
 from flask import Flask, render_template, url_for, flash, redirect
-from cookbook import app
+from cookbook import app, db, bcrypt
 from cookbook.forms import RegisterForm, LoginForm
 from cookbook.models import User, Recipe
+from flask_login import login_user, current_user, logout_user, login_required
 
 
 recipes = [
@@ -32,19 +33,34 @@ def about():
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     form = RegisterForm()
     if form.validate_on_submit():
+        hashpass = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        user = User(username=form.username.data, email=form.email.data, password=hashpass)
+        db.session.add(user)
+        db.session.commit()
         flash(f'Account created for {form.username.data}', 'success')
-        return redirect(url_for('home'))
+        return redirect(url_for('login'))
     return render_template('register.html', form=form)
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('home')) # if the user is already authenticated it will be redirected to home
     form = LoginForm()
     if form.validate_on_submit():
-        if form.email.data == 'user@email.com' and form.password.data == 'password':
-            flash('Logged in', 'success')
+        user = User.query.filter_by(email=form.email.data).first()
+        if user and bcrypt.check_password_hash(user.password, form.password.data): #check if password enetered in the form is same as in the database
+            login_user(user, remember=form.remember.data)
             return redirect(url_for('home'))
         else:
             flash('Please check your login credentials', 'danger')
     return render_template('login.html', form=form)
+
+# if the user is logged out it will be redirected to home
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for('home'))
