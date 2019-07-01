@@ -64,3 +64,8 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('home'))
+
+@app.route("/myaccount")
+@login_required # decorator to restrict access to this route
+def myaccount():
+    return render_template('myaccount.html')
