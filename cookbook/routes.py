@@ -1,4 +1,5 @@
-from flask import Flask, render_template, url_for, flash, redirect
+import os
+from flask import Flask, render_template, url_for, flash, redirect, request, abort
 from cookbook import app, db, bcrypt
 from cookbook.forms import RegisterForm, LoginForm, RecipeForm
 from cookbook.models import User, Recipe
@@ -74,3 +75,24 @@ def recipe(recipe_id):
     recipe = Recipe.query.get_or_404(recipe_id)
     return render_template('recipe.html', recipe=recipe)
 
+@app.route("/recipe/<int:recipe_id>/edit", methods=['GET', 'POST'])
+@login_required
+def edit_recipe(recipe_id):
+    recipe = Recipe.query.get_or_404(recipe_id)
+    if recipe.author != current_user:
+        return abort(403)
+    form = RecipeForm()    
+    if form.validate_on_submit():
+        recipe.title = form.title.data
+        recipe.description = form.description.data
+        recipe.method = form.method.data
+        recipe.picture = form.picture.data
+        db.session.commit()
+        flash('Recipe updated', 'success')
+        return redirect(url_for('recipe', recipe_id=recipe.id))
+    elif request.method == 'GET':
+        form.title.data = recipe.title
+        form.description.data = recipe.description
+        form.method.data = recipe.method
+        form.picture.data = recipe.picture
+    return render_template('new_recipe.html', form=form)

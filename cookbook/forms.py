@@ -32,4 +32,4 @@ class RecipeForm(FlaskForm):
     picture = StringField('Picture')
     description = TextAreaField('Description')
     method = TextAreaField('Method')
-    submit = SubmitField('Create Recipe')
+    submit = SubmitField('Create')
