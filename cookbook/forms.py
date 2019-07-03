@@ -29,5 +29,7 @@ class LoginForm(FlaskForm):
 
 class RecipeForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
-    description = TextAreaField('Description', validators=[DataRequired()])
+    picture = StringField('Picture')
+    description = TextAreaField('Description')
+    method = TextAreaField('Method')
     submit = SubmitField('Create Recipe')

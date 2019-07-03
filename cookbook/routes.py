@@ -5,26 +5,13 @@ from cookbook.models import User, Recipe
 from flask_login import login_user, current_user, logout_user, login_required
 
 
-recipes = [
-    {
-        'name': 'recipe 1',
-        'description': 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sapiente, rem?',
-        'method': ['step1', 'step 2', 'step 3'],
-        'picture': 'https://dummyimage.com/300' 
-    },
-    {
-        'name': 'recipe 2',
-        'description': 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sapiente, rem?',
-        'method': ['step1', 'step 2', 'step 3'],
-        'picture': 'https://dummyimage.com/300' 
-    }
-]
 
 # routes
 
 @app.route("/")
 @app.route("/home")
 def home():
+    recipes = Recipe.query.all()
     return render_template('home.html', recipes=recipes)
 
 @app.route("/about")
@@ -35,13 +22,13 @@ def about():
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
-    form = RegisterForm()
+    form = RegisterForm() # create an instance of the form and pass it on to the template as a variable with 'form=form'
     if form.validate_on_submit():
         hashpass = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         user = User(username=form.username.data, email=form.email.data, password=hashpass)
         db.session.add(user)
         db.session.commit()
-        flash(f'Account created for {form.username.data}', 'success')
+        flash(f'Account created for {form.username.data}', 'success') # sending a message to the next request
         return redirect(url_for('login'))
     return render_template('register.html', form=form)
 
@@ -68,16 +55,22 @@ def logout():
 @app.route("/myaccount")
 @login_required # decorator to restrict access to this route
 def myaccount():
-    return render_template('myaccount.html')
+    return render_template('my_account.html')
 
 @app.route("/recipe/new", methods=['GET', 'POST'])
 @login_required
 def new_recipe():
     form = RecipeForm()
     if form.validate_on_submit():
-        recipe = Recipe(title=form.title.data, description=form.description.data, author=current_user)
+        recipe = Recipe(title=form.title.data, description=form.description.data, picture=form.picture.data, method=form.method.data, author=current_user)
         db.session.add(recipe)
         db.session.commit()
         flash('New Recipe Created', 'success')
         return redirect(url_for('home'))
     return render_template('new_recipe.html', form=form)
+
+@app.route("/recipe/<int:recipe_id>")
+def recipe(recipe_id):
+    recipe = Recipe.query.get_or_404(recipe_id)
+    return render_template('recipe.html', recipe=recipe)
+

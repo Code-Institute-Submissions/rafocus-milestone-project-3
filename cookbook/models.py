@@ -20,9 +20,11 @@ class User(db.Model, UserMixin):
 class Recipe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
-    date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    description = db.Column(db.Text, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False) # foreign key to know the author of the recipe
+    date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    description = db.Column(db.Text, nullable=False, default='')
+    method = db.Column(db.Text, nullable=False, default='')
+    picture = db.Column(db.String(150), nullable=False, default='https://dummyimage.com/300')
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False) # foreign key to the author of the recipe
 
     def __repr__(self):
-        return f"Recipe('{self.title}', '{self.date_created}')"
+        return f"Recipe('{self.title}', '{self.date}')"

@@ -1,0 +1,22 @@
+{% extends "main.html" %}
+{% block content %}
+        <!-- <div class="card" style="width: 18rem;">
+                <img src="{{ recipe.picture }}" class="card-img-top" alt="" height="300">
+                <div class="card-body">
+                  <h5 class="card-title">{{ recipe.title }}</h5>
+                  <a href="#" class="btn btn-outline-secondary">Details</a>
+                </div>
+              </div> -->
+
+<div class="media">
+        <div class="media-body">
+          <h4 class="mt-4">{{ recipe.title }}</h4>
+          <h5>Description:</h5>
+          <p>{{ recipe.description }}</p>
+          <h5>Method:</h5>
+          <p class="mb-0">{{ recipe.method }}</p>
+        </div>
+        <img src="{{ recipe.picture }}" class="align-self-end mr-3" alt="..." height="300">
+
+</div>
+{% endblock content %}
