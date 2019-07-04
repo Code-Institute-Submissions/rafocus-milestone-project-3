@@ -1,6 +1,6 @@
 {% extends "main.html" %}
 {% block content %}
-    {% for recipe in recipes %}
+    {% for recipe in recipes.items %}
         <div class="card" style="width: 18rem;">
                 <img src="{{ recipe.picture }}" class="card-img-top" alt="" height="300">
                 <div class="card-body">
@@ -9,4 +9,17 @@
                 </div>
               </div>
     {% endfor %}
+    <div class="mt-4">
+        {% for page_nbr in recipes.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=1) %}
+        {% if page_nbr %}
+          {% if recipes.page == page_nbr %}
+            <a class="btn btn-info mb-4" href="{{ url_for('home', page=page_nbr) }}">{{ page_nbr }}</a>
+          {% else %}
+            <a class="btn btn-outline-info mb-4" href="{{ url_for('home', page=page_nbr) }}">{{ page_nbr }}</a>
+          {% endif %}
+        {% else %}
+          ..
+        {% endif %}
+      {% endfor %}
+    </div>
 {% endblock content %}
