@@ -96,3 +96,14 @@ def edit_recipe(recipe_id):
         form.method.data = recipe.method
         form.picture.data = recipe.picture
     return render_template('new_recipe.html', form=form)
+
+@app.route("/recipe/<int:recipe_id>/delete", methods=['POST'])
+@login_required
+def delete_recipe(recipe_id):
+    recipe = Recipe.query.get_or_404(recipe_id)
+    if recipe.author != current_user:
+        return abort(403)
+    db.session.delete(recipe)
+    db.session.commit()
+    flash('Recipe deleted', 'success')
+    return redirect(url_for('home'))
