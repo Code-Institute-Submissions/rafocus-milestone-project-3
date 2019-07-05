@@ -32,6 +32,8 @@
 </div>
 <div class="media">
     <div class="media-body">
+        <a class="text-muted"href="{{ url_for('user_recipes', username=recipe.author.username ) }}">view all recipes by {{ recipe.author.username }}</a>
+        <p class="text-muted">{{ recipe.date.strftime('%d-%m-%y') }}</p>
         <h4 class="mt-4">{{ recipe.title }}</h4>
         <h5>Description:</h5>
         <p>{{ recipe.description }}</p>

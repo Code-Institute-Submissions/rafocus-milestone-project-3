@@ -4,6 +4,8 @@
         <div class="media m-4">
             <img src="{{ recipe.picture | default('https://dummyimage.com/300') }}" class="mr-3" alt="..." height="200">
             <div class="media-body">
+              <a class="text-muted"href="{{ url_for('user_recipes', username=recipe.author.username ) }}">view all recipes by {{ recipe.author.username }}</a>
+              <p class="text-muted">{{ recipe.date.strftime('%d-%m-%y') }}</p>
               <h5 class="mt-0">{{ recipe.title }}</h5>
               {{ recipe.description }}
             </div>

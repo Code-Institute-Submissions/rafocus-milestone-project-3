@@ -5,8 +5,8 @@
         <div class="media m-4">
                 <img src="{{ recipe.picture }}" class="mr-3" alt="...">
                 <div class="media-body">
-                  <h5 class="mt-0">{{ recipe.title }}</h5>
-                  {{ recipe.description }}
+                    <h5 class="mt-0">{{ recipe.title }}</h5>
+                     {{ recipe.description }}
                 </div>
                 <a href="{{ url_for('recipe', recipe_id=recipe.id) }}" class="btn btn-outline-secondary m-4">Details</a>
             </div> 
