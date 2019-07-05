@@ -117,3 +117,15 @@ def user_recipes(username):
         .order_by(Recipe.date.desc())\
         .paginate(page=page, per_page=6)
     return render_template('user_recipes.html', recipes=recipes, user=user)
+
+@app.errorhandler(404)
+def not_found(error):
+    return render_template('404.html'), 404
+
+@app.errorhandler(500)
+def server_error(error):
+    return render_template('500.html'), 500
+
+@app.errorhandler(403)
+def forbidden(error):
+    return render_template('403.html'), 403
