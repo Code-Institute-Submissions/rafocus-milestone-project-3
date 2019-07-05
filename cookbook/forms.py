@@ -29,11 +29,11 @@ class LoginForm(FlaskForm):
 
 class RecipeForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
+    category = StringField('Category')
+    requirement = StringField('Allergy / Intolerence')
     picture = StringField('Picture')
     description = TextAreaField('Description')
+    ingredients = TextAreaField('Ingredients')
     method = TextAreaField('Method')
     submit = SubmitField('Create')
 
-class SearchForm(FlaskForm):
-    user = StringField('User', validators=[DataRequired()])
-    submit = SubmitField('Search')

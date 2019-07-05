@@ -20,6 +20,9 @@ class User(db.Model, UserMixin):
 class Recipe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
+    category = db.Column(db.String(100), nullable=False, default='')
+    requirement = db.Column(db.String(100), nullable=False, default='')
+    ingredients = db.Column(db.Text, nullable=False, default='')
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     description = db.Column(db.Text, nullable=False, default='')
     method = db.Column(db.Text, nullable=False, default='')

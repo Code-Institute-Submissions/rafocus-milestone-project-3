@@ -1,7 +1,7 @@
 import os
 from flask import Flask, render_template, url_for, flash, redirect, request, abort
 from cookbook import app, db, bcrypt
-from cookbook.forms import RegisterForm, LoginForm, RecipeForm, SearchForm
+from cookbook.forms import RegisterForm, LoginForm, RecipeForm
 from cookbook.models import User, Recipe
 from flask_login import login_user, current_user, logout_user, login_required
 

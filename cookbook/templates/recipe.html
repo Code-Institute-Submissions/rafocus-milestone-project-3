@@ -35,10 +35,16 @@
         <h4 class="mt-4">{{ recipe.title }}</h4>
         <h5>Description:</h5>
         <p>{{ recipe.description }}</p>
+        <h5>Category:</h5>
+        <p>{{ recipe.category }}</p>
+        <h5>Allergy / Intolerence::</h5>
+        <p>{{ recipe.requirement }}</p>
+        <h5>Ingredients:</h5>
+        <p>{{ recipe.ingredients }}</p>
         <h5>Method:</h5>
         <p class="mb-0">{{ recipe.method }}</p>
     </div>
-    <img src="{{ recipe.picture }}" class="align-self-end mr-3" alt="..." height="300">
+    <img src="{{ recipe.picture }}" class="align-self-end mr-3" alt="..." height="200">
 
 </div>
 {% endblock content %}
