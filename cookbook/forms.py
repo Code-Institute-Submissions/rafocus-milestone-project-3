@@ -33,3 +33,7 @@ class RecipeForm(FlaskForm):
     description = TextAreaField('Description')
     method = TextAreaField('Method')
     submit = SubmitField('Create')
+
+class SearchForm(FlaskForm):
+    user = StringField('User', validators=[DataRequired()])
+    submit = SubmitField('Search')

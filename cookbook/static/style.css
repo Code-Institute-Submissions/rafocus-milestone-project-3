@@ -1,1 +1,7 @@
-.card {display:inline-block;}
+.card {
+    display:inline-block;
+    width: 18rem;
+}
+.media {
+    background-color: rgb(252, 247, 240);
+}

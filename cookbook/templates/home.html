@@ -1,14 +1,15 @@
 {% extends "main.html" %}
 {% block content %}
     {% for recipe in recipes.items %}
-        <div class="card" style="width: 18rem;">
-                <img src="{{ recipe.picture }}" class="card-img-top" alt="" height="300">
-                <div class="card-body">
-                  <h5 class="card-title">{{ recipe.title }}</h5>
-                  <a href="{{ url_for('recipe', recipe_id=recipe.id) }}" class="btn btn-outline-secondary">Details</a>
-                </div>
-              </div>
-    {% endfor %}
+        <div class="media m-4">
+            <img src="{{ recipe.picture | default('https://dummyimage.com/300') }}" class="mr-3" alt="..." height="200">
+            <div class="media-body">
+              <h5 class="mt-0">{{ recipe.title }}</h5>
+              {{ recipe.description }}
+            </div>
+            <a href="{{ url_for('recipe', recipe_id=recipe.id) }}" class="btn btn-outline-secondary m-4">Details</a>
+        </div>      
+{% endfor %}
     <div class="mt-4">
         {% for page_nbr in recipes.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=1) %}
         {% if page_nbr %}

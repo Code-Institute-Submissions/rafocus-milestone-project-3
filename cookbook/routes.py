@@ -1,7 +1,7 @@
 import os
 from flask import Flask, render_template, url_for, flash, redirect, request, abort
 from cookbook import app, db, bcrypt
-from cookbook.forms import RegisterForm, LoginForm, RecipeForm
+from cookbook.forms import RegisterForm, LoginForm, RecipeForm, SearchForm
 from cookbook.models import User, Recipe
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -13,7 +13,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 @app.route("/home")
 def home():
     page = request.args.get('page', 1, type=int) # 1 the initial value
-    recipes = Recipe.query.order_by(Recipe.date.desc()).paginate(page=page, per_page=5) #recent first, 9 per page
+    recipes = Recipe.query.order_by(Recipe.date.desc()).paginate(page=page, per_page=6)
     return render_template('home.html', recipes=recipes)
 
 @app.route("/about")
@@ -108,3 +108,12 @@ def delete_recipe(recipe_id):
     db.session.commit()
     flash('Recipe deleted', 'success')
     return redirect(url_for('home'))
+
+@app.route("/user/<string:username>")
+def user_recipes(username):
+    page = request.args.get('page', 1, type=int)
+    user = User.query.filter_by(username=username).first_or_404()
+    recipes = Recipe.query.filter_by(author=user)\
+        .order_by(Recipe.date.desc())\
+        .paginate(page=page, per_page=6)
+    return render_template('user_recipes.html', recipes=recipes, user=user)

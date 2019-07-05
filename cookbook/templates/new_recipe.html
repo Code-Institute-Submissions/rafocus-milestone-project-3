@@ -1,7 +1,8 @@
 {% extends "main.html" %}
 {% block content %}
-<form method="POST" action="">
-    {{ form.hidden_tag() }}
+<form method="POST" action="" novalidate>
+    <!-- this is to protect against cross site request forgery attacks -->
+    {{ form.hidden_tag() }} 
     <div class="form-group">
         {{ form.title.label(class="form-control-label") }}
         {% if form.title.errors %}
