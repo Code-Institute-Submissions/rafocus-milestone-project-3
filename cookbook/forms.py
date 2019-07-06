@@ -37,3 +37,7 @@ class RecipeForm(FlaskForm):
     method = TextAreaField('Method')
     submit = SubmitField('Create')
 
+class SearchForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    submit = SubmitField('Search')
+

@@ -1,0 +1,50 @@
+{% extends "main.html" %}
+{% block content %}
+<form method="POST" action="" novalidate>
+        <!-- this is to protect against cross site request forgery attacks -->
+        {{ form.hidden_tag() }} 
+        <div class="form-group">
+            {{ form.username.label(class="form-control-label") }}
+            {% if form.username.errors %}
+                {{ form.username(class="form-control is-invalid")}}
+                <div class="invalid-feedback">
+                    {% for error in form.username.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.username(class="form-control") }}
+            {% endif %}
+        </div>
+        <div class="form-group">
+                {{ form.submit(class="btn btn-outline-secondary") }}
+            </div>
+        </form>
+{% if recipes %}
+{% for recipe in recipes.items %}
+        <div class="media m-4">
+            <img src="{{ recipe.picture | default('https://dummyimage.com/300') }}" class="mr-3" alt="..." height="200">
+            <div class="media-body">
+              <a class="text-muted"href="{{ url_for('user_recipes', username=recipe.author.username ) }}">view all recipes by {{ recipe.author.username }}</a>
+              <p class="text-muted">{{ recipe.date.strftime('%d-%m-%y') }}</p>
+              <h5 class="mt-0">{{ recipe.title }}</h5>
+              {{ recipe.description }}
+            </div>
+            <a href="{{ url_for('recipe', recipe_id=recipe.id) }}" class="btn btn-outline-secondary m-4">Details</a>
+        </div>      
+{% endfor %}
+    <div class="mt-4">
+        {% for page_nbr in recipes.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=1) %}
+        {% if page_nbr %}
+          {% if recipes.page == page_nbr %}
+            <a class="btn btn-info mb-4" href="{{ url_for('home', page=page_nbr) }}">{{ page_nbr }}</a>
+          {% else %}
+            <a class="btn btn-outline-info mb-4" href="{{ url_for('home', page=page_nbr) }}">{{ page_nbr }}</a>
+          {% endif %}
+        {% else %}
+          ..
+        {% endif %}
+      {% endfor %}
+    </div>
+{% endif %}
+{% endblock content %}
