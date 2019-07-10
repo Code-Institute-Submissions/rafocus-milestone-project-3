@@ -12,6 +12,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(15), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
+
     recipes = db.relationship('Recipe', backref='author', lazy=True)
 
     def __repr__(self):
@@ -20,14 +21,27 @@ class User(db.Model, UserMixin):
 class Recipe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
-    category = db.Column(db.String(100), nullable=False, default='')
-    requirement = db.Column(db.String(100), nullable=False, default='')
+    cuisine = db.Column(db.String(100), nullable=False, default='')
     ingredients = db.Column(db.Text, nullable=False, default='')
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     description = db.Column(db.Text, nullable=False, default='')
-    method = db.Column(db.Text, nullable=False, default='')
-    picture = db.Column(db.String(150), nullable=False, default='https://dummyimage.com/300')
+    preparation = db.Column(db.Text, nullable=False, default='')
+    picture = db.Column(db.String(150), nullable=False, default='https://dummyimage.com/200')
+
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False) # foreign key to the author of the recipe
+    diets = db.relationship('Diet', secondary='recipe_diet', backref='recipe', lazy=True)
 
     def __repr__(self):
         return f"Recipe('{self.title}', '{self.date}')"
+
+class Diet(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+
+    def __repr__(self):
+        return f"Diet('{self.title}')"
+    
+db.Table('recipe_diet',
+    db.Column('recipe_id', db.Integer, db.ForeignKey('diet.id')),
+    db.Column('diet_id', db.Integer, db.ForeignKey('recipe.id'))
+)

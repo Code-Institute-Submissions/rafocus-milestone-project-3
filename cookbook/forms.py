@@ -1,7 +1,12 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, SelectField, SelectMultipleField
+from wtforms.widgets import ListWidget, CheckboxInput
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from cookbook.models import User
+
+class MultiCheckboxField(SelectMultipleField):
+    widget = ListWidget(prefix_label=False)
+    option_widget = CheckboxInput()
 
 # registration form fields
 class RegisterForm(FlaskForm):
@@ -29,12 +34,12 @@ class LoginForm(FlaskForm):
 
 class RecipeForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
-    category = StringField('Category')
-    requirement = StringField('Allergy / Intolerence')
+    cuisine = SelectField('Cuisine', choices=[('1','Mediterranean'), ('2','European'), ('3','Asian')])
+    diet = MultiCheckboxField('Diet Requirement', choices=[])
     picture = StringField('Picture')
     description = TextAreaField('Description')
     ingredients = TextAreaField('Ingredients')
-    method = TextAreaField('Method')
+    preparation = TextAreaField('Method')
     submit = SubmitField('Create')
 
 class SearchForm(FlaskForm):

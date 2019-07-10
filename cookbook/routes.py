@@ -2,7 +2,7 @@ import os
 from flask import Flask, render_template, url_for, flash, redirect, request, abort
 from cookbook import app, db, bcrypt
 from cookbook.forms import RegisterForm, LoginForm, RecipeForm, SearchForm
-from cookbook.models import User, Recipe
+from cookbook.models import User, Recipe, Diet
 from flask_login import login_user, current_user, logout_user, login_required
 
 
@@ -63,10 +63,21 @@ def myaccount():
 @login_required
 def new_recipe():
     form = RecipeForm()
+    choices =[]
+    i=1
+    for item in Diet.query.all():
+        choices.append((str(i), item.title))
+        ++i
+    form.diet.choices = choices
     if form.validate_on_submit():
-        recipe = Recipe(title=form.title.data, description=form.description.data, picture=form.picture.data, method=form.method.data, author=current_user)
+        recipe = Recipe(title=form.title.data, cuisine=form.cuisine.data, description=form.description.data, picture=form.picture.data, preparation=form.preparation.data, author=current_user)
         db.session.add(recipe)
         db.session.commit()
+        diets = form.diet.data
+        for item in diets:
+            diet = Diet.query.filter_by(title=item).first()
+            diet.recipe.append(recipe)
+            db.session.commit()
         flash('New Recipe Created', 'success')
         return redirect(url_for('home'))
     return render_template('new_recipe.html', form=form)
@@ -86,16 +97,18 @@ def edit_recipe(recipe_id):
     form.submit.label.text = 'Edit'
     if form.validate_on_submit():
         recipe.title = form.title.data
+        recipe.cuisine = form.cuisine.data
         recipe.description = form.description.data
-        recipe.method = form.method.data
+        recipe.preparation = form.preparation.data
         recipe.picture = form.picture.data
         db.session.commit()
         flash('Recipe updated', 'success')
         return redirect(url_for('recipe', recipe_id=recipe.id))
     elif request.method == 'GET':
         form.title.data = recipe.title
+        form.cuisine.data = recipe.cuisine
         form.description.data = recipe.description
-        form.method.data = recipe.method
+        form.preparation.data = recipe.preparation
         form.picture.data = recipe.picture
     return render_template('new_recipe.html', form=form)
 
