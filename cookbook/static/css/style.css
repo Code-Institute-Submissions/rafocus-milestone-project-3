@@ -1,3 +1,13 @@
+body {
+    font-family: sans-serif;
+    font-weight: 300;
+    background-color: rgb(233, 233, 233);
+}
+
+.navbar {
+    background-color: #df8d41;   
+}
+
 .card {
     display:inline-block;
     width: 18rem;
@@ -6,3 +16,21 @@
     background-color: rgb(252, 247, 240);
     padding: 1rem;
 }
+
+#page-container {
+    position: relative;
+    min-height: 100vh;
+}
+  
+#content-wrap {
+    padding-bottom: 6rem;   
+}
+  
+#footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 4rem;                
+    color: white;  
+    background-color: #df8d41;    
+  }
