@@ -26,22 +26,10 @@ class Recipe(db.Model):
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     description = db.Column(db.Text, nullable=False, default='')
     preparation = db.Column(db.Text, nullable=False, default='')
-    picture = db.Column(db.String(150), nullable=False, default='https://dummyimage.com/200')
+    picture = db.Column(db.String(300), nullable=False, default='https://dummyimage.com/200')
+    requirement = db.Column(db.String(150), nullable=False, default='')
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False) # foreign key to the author of the recipe
-    diets = db.relationship('Diet', secondary='recipe_diet', backref='recipe', lazy=True)
 
     def __repr__(self):
         return f"Recipe('{self.title}', '{self.date}')"
-
-class Diet(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), nullable=False)
-
-    def __repr__(self):
-        return f"Diet('{self.title}')"
-    
-db.Table('recipe_diet',
-    db.Column('recipe_id', db.Integer, db.ForeignKey('diet.id')),
-    db.Column('diet_id', db.Integer, db.ForeignKey('recipe.id'))
-)

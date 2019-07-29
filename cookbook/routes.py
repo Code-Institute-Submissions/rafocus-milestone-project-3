@@ -2,7 +2,7 @@ import os
 from flask import Flask, render_template, url_for, flash, redirect, request, abort
 from cookbook import app, db, bcrypt
 from cookbook.forms import RegisterForm, LoginForm, RecipeForm, SearchForm
-from cookbook.models import User, Recipe, Diet
+from cookbook.models import User, Recipe
 from flask_login import login_user, current_user, logout_user, login_required
 
 
@@ -14,8 +14,6 @@ from flask_login import login_user, current_user, logout_user, login_required
 def home():
     page = request.args.get('page', 1, type=int) # 1 the initial value
     recipes = Recipe.query.order_by(Recipe.date.desc()).paginate(page=page, per_page=6)
-    print('printing')
-    print(recipes.items[0].picture)
     return render_template('home.html', recipes=recipes)
 
 @app.route("/about")
@@ -65,21 +63,10 @@ def myaccount():
 @login_required
 def new_recipe():
     form = RecipeForm()
-    choices =[]
-    i=1
-    for item in Diet.query.all():
-        choices.append((str(i), item.title))
-        ++i
-    form.diet.choices = choices
     if form.validate_on_submit():
-        recipe = Recipe(title=form.title.data, cuisine=form.cuisine.data, description=form.description.data, picture=form.picture.data, preparation=form.preparation.data, author=current_user)
+        recipe = Recipe(title=form.title.data, cuisine=form.cuisine.data, description=form.description.data, picture=form.picture.data, requirement=form.requirement.data, preparation=form.preparation.data, author=current_user)
         db.session.add(recipe)
         db.session.commit()
-        diets = form.diet.data
-        for item in diets:
-            diet = Diet.query.filter_by(title=item).first()
-            diet.recipe.append(recipe)
-            db.session.commit()
         flash('New Recipe Created', 'success')
         return redirect(url_for('home'))
     return render_template('new_recipe.html', form=form)

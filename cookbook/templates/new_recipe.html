@@ -17,8 +17,17 @@
         {% endif %}
     </div>
     <div class="form-group">
-        {{ form.diet.label(class="form-control-label") }}
-        {{ form.diet}}
+        {{ form.requirement.label(class="form-control-label") }}
+        {% if form.requirement.errors %}
+            {{ form.requirement(class="form-control is-invalid")}}
+            <div class="invalid-feedback">
+                {% for error in form.requirement.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% else %}
+            {{ form.requirement(class="form-control") }}
+        {% endif %}
     </div>
     <div class="form-group">
         {{ form.cuisine.label(class="form-control-label") }}
