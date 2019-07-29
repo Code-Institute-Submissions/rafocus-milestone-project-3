@@ -14,6 +14,8 @@ from flask_login import login_user, current_user, logout_user, login_required
 def home():
     page = request.args.get('page', 1, type=int) # 1 the initial value
     recipes = Recipe.query.order_by(Recipe.date.desc()).paginate(page=page, per_page=6)
+    print('printing')
+    print(recipes.items[0].picture)
     return render_template('home.html', recipes=recipes)
 
 @app.route("/about")

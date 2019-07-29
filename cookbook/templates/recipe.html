@@ -30,7 +30,33 @@
         </div>
     </div>
 </div>
-<div class="media">
+<div class="row recipe">
+    <div class="col-md-8">
+        <h1 class="mt-4">{{ recipe.title }}</h1>
+        <span class="text-muted">Shared by {{ recipe.author.username }} on {{ recipe.date.strftime('%d.%m.%y') }}</span>
+        <span><a class="text-muted"href="{{ url_for('user_recipes', username=recipe.author.username ) }}">(View all recipes by {{ recipe.author.username }})</a></span>
+        <div class="region mt-4">
+                <h2>Description:</h2>
+                <p>{{ recipe.description }}</p>
+        </div>
+        <div class="region mt-4">
+                <h2>Ingredients:</h2>
+                <p>{{ recipe.ingredients }}</p>
+        </div>
+        <div class="region mt-4">
+                <h2>Method:</h2>
+                <p>{{ recipe.method }}</p>
+        </div>
+        <div class="region mt-4">
+                <h2>Allergy / Intolerence:</h2>
+                <p>{{ recipe.requirement }}</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <img src="{{ recipe.picture }}" class="align-self-end mr-3" alt="..." height="200">
+    </div>
+</div>
+<!-- <div class="media">
     <div class="media-body">
         <a class="text-muted"href="{{ url_for('user_recipes', username=recipe.author.username ) }}">view all recipes by {{ recipe.author.username }}</a>
         <p class="text-muted">{{ recipe.date.strftime('%d-%m-%y') }}</p>
@@ -48,5 +74,5 @@
     </div>
     <img src="{{ recipe.picture }}" class="align-self-end mr-3" alt="..." height="200">
 
-</div>
+</div> -->
 {% endblock content %}
