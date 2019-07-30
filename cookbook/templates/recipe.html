@@ -34,23 +34,40 @@
     <div class="col-md-8">
         <h1 class="mt-4">{{ recipe.title }}</h1>
         <span class="text-muted">Shared by {{ recipe.author.username }} on {{ recipe.date.strftime('%d.%m.%y') }}</span>
-        <span><a class="text-muted" href="{{ url_for('user_recipes', username=recipe.author.username ) }}">(View all recipes by {{ recipe.author.username }})</a></span>
+        <span><a class="text-muted" href="{{ url_for('user_recipes', username=recipe.author.username ) }}">(View all
+                recipes by {{ recipe.author.username }})</a></span>
         <div class="region mt-4">
+            <pre>
+                <h2>cuisine:</h2>
+                <p>{{ recipe.cuisine }}</p>
+            </pre>
+        </div>
+        <div class="region mt-4">
+            <pre>
                 <h2>Description:</h2>
                 <p>{{ recipe.description }}</p>
+            </pre>
         </div>
         <div class="region mt-4">
+            <pre>
                 <h2>Ingredients:</h2>
-                <p>{{ recipe.ingredients }}</p>
+                <p>{{ recipe.ingredients|safe }}</p>
+            </pre>
         </div>
         <div class="region mt-4">
+            <pre>
                 <h2>Method:</h2>
-                <p>{{ recipe.requirement }}</p>
+                <p>{{ recipe.preparation }}</p>
+            </pre>
         </div>
+        {% if recipe.requirement %}
         <div class="region mt-4">
+            <pre>
                 <h2>Allergy / Intolerence:</h2>
                 <p>{{ recipe.requirement }}</p>
+            </pre>
         </div>
+        {% endif %}
     </div>
     <div class="col-md-4">
         <img src="{{ recipe.picture }}" class="align-self-end mr-3" alt="image" height="200">
