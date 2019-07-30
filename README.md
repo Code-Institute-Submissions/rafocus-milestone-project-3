@@ -22,13 +22,9 @@ Password: testpass1
 
 ### Wireframes: 
 
-<img src="wireframes/1.png" alt="home" height="300"/> 
+<img src="wireframes/1.png" alt="home" height="300"/> <img src="wireframes/2.png" alt="detail" height="300"/>
 
-<img src="wireframes/2.png" alt="detail" height="300"/>
-
-<img src="wireframes/mobile_list.png" alt="detail" height="300"/>
-
-<img src="wireframes/mobile_detail.png" alt="detail" height="300"/>
+<img src="wireframes/mobile_list.png" alt="detail" height="300"/> <img src="wireframes/mobile_detail.png" alt="detail" height="300"/>
 
 ## Features
 
@@ -73,5 +69,40 @@ Password: testpass1
 ## Testing
 
 - HTML and CSS of all pages was tested to be valid with W3 tool
-- Functional tests weere carried out manualy to test all routes and functionalities expected in the user stories.
-- 
+- The application was tested for responsiveness and functionality on different screen sizes and mobile
+- Functional user tests were carried out manualy to test all routes and functionalities expected in the user stories
+- Try empty space and different expressions in the search box, one or many words with spaces, with all the fields
+- In the recipe detail view, try to edit and delete without being authenticated
+- In the user registration, all fields were tested with different input.
+- While authenticated tried to update and delete other users recipes.
+- In the new recipe page tried different invalid inputs.
+- Login with invalid credentials
+- While authenticated, remove recipes then check in the results.
+- While authenticated, update all fields of a recipe and check if they were saved.
+- Search for expressions known to exist and see if they are displayed in the results, for every field.
+
+## Deployment
+
+- Clone the repository
+- Start a virtual environement with pipenv
+- Install dependencies with 'pipenv install'
+- Initiate a git local repository
+- For local testing and development, create .env file and include values for these variables: SECRET_KEY, DATABASE_URL.
+- Restart pipenv
+- Create an app in Heroku
+- Add a PostgreSQL addon in heroku
+- In Heroku settings add environement variables for: SECRET_KEY, IP (0.0.0.0), PORT (5000)
+- Deploy to heroku following the instructions [here](https://devcenter.heroku.com/articles/git)
+
+## Credits
+
+- Code Intitute Material
+- The Flask Mega Tutorial by Miguel Grinberg
+
+### Content
+
+- [BBc food recipes](bbc.co.uk/food/recipes)
+
+### Design
+
+Rafocus
