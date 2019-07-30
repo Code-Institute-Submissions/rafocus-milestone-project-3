@@ -44,6 +44,7 @@
         </div>
     </div>
 </form>
+
 <div class="row mt-4">
     {% for recipe in recipes.items %}
     <div class="col-4 p-2">
@@ -65,7 +66,6 @@
 {% endif %}
 {% endfor %}
 </div>
-
 
 <div class="mt-4">
     {% for page_nbr in recipes.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=1) %}

@@ -1,27 +1,43 @@
 {% extends "main.html" %}
 {% block content %}
-    <h1 class="m-4">Recipes by {{ user.username }} ({{ recipes.total }})</h1>
-    {% for recipe in recipes.items %}
-        <div class="media m-4">
-                <img src="{{ recipe.picture }}" class="mr-3" alt="...">
-                <div class="media-body">
-                    <h5 class="mt-0">{{ recipe.title }}</h5>
-                     {{ recipe.description }}
-                </div>
-                <a href="{{ url_for('recipe', recipe_id=recipe.id) }}" class="btn btn-outline-secondary m-4">Details</a>
-            </div> 
-    {% endfor %}
-    <div class="mt-4">
-        {% for page_nbr in recipes.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=1) %}
-        {% if page_nbr %}
-          {% if recipes.page == page_nbr %}
-            <a class="btn btn-info mb-4" href="{{ url_for('user_recipes', username=user.username, page=page_nbr) }}">{{ page_nbr }}</a>
-          {% else %}
-            <a class="btn btn-outline-info mb-4" href="{{ url_for('user_recipes', username=user.username, page=page_nbr) }}">{{ page_nbr }}</a>
-          {% endif %}
-        {% else %}
-          ..
-        {% endif %}
-      {% endfor %}
+<h1 class="m-4">Recipes by {{ user.username }} ({{ recipes.total }})</h1>
+
+<div class="row mt-4">
+  {% for recipe in recipes.items %}
+  <div class="col-4 p-2">
+    <div class="card" style="width: 18rem;">
+      <img class="card-img-top" src="{{ recipe.picture | default('https://dummyimage.com/300') }}" alt="...">
+      <div class="card-body">
+        <h5 class="card-title font-weight-bold">{{ recipe.title }}</h5>
+        <p class="card-text">{{ recipe.description[:60] }}</p>
+        <p>...</p>
+        <a href="{{ url_for('recipe', recipe_id=recipe.id) }}" class="btn btn-primary">View</a>
+      </div>
     </div>
+    {% if loop.index %3 == 0%}
+  </div>
+</div>
+<div class="row">
+  {% else %}
+</div>
+{% endif %}
+{% endfor %}
+</div>
+
+
+<div class="mt-4">
+  {% for page_nbr in recipes.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=1) %}
+  {% if page_nbr %}
+  {% if recipes.page == page_nbr %}
+  <a class="btn btn-info mb-4"
+    href="{{ url_for('user_recipes', username=user.username, page=page_nbr) }}">{{ page_nbr }}</a>
+  {% else %}
+  <a class="btn btn-outline-info mb-4"
+    href="{{ url_for('user_recipes', username=user.username, page=page_nbr) }}">{{ page_nbr }}</a>
+  {% endif %}
+  {% else %}
+  ..
+  {% endif %}
+  {% endfor %}
+</div>
 {% endblock content %}
