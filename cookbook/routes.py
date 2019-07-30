@@ -15,7 +15,7 @@ def home():
         searchString = form.searchString.data
         searchField = form.searchField.data
         # retrieve the column name dynamicaly 
-        recipes = Recipe.query.filter(getattr(Recipe, searchField).contains(searchString))\
+        recipes = Recipe.query.filter(getattr(Recipe, searchField).ilike(f'%{searchString}%'))\
         .order_by(Recipe.date.desc())\
         .paginate(page=page, per_page=6)
     return render_template('home.html', form=form, recipes=recipes)
