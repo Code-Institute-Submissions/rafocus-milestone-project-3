@@ -35,7 +35,7 @@ class LoginForm(FlaskForm):
 class RecipeForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     cuisine = StringField('Cuisine')
-    requirement = StringField('Allergy')
+    requirement = StringField('Dietary')
     picture = StringField('Picture URL')
     description = TextAreaField('Description')
     ingredients = TextAreaField('Ingredients')
@@ -44,6 +44,6 @@ class RecipeForm(FlaskForm):
 
 class SearchForm(FlaskForm):
     searchString = StringField('Search expression', validators=[DataRequired()])
-    searchField = SelectField('Search in:', choices=[('title','Title'), ('description','Description'), ('ingredients','Ingredients'), ('preparation','Method'), ('requirement','Allergy')])
+    searchField = SelectField('Search in:', choices=[('title','Title'), ('description','Description'), ('ingredients','Ingredients'), ('preparation','Method'), ('requirement','Dietary')])
     submit = SubmitField('Search')
 
