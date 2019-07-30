@@ -6,7 +6,7 @@ Design and implement a web application where users can share cooking recipes and
 Demo application deployed [here](https://cookbook2019.herokuapp.com/)  
 
 Demo login:  
-email: test@email.com  
+Email: test@email.com  
 Password: testpass1
 
 ## UX
