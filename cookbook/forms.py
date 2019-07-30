@@ -36,7 +36,7 @@ class RecipeForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     cuisine = SelectField('Cuisine', choices=[('1','Mediterranean'), ('2','European'), ('3','Asian')])
     requirement = StringField('Allergy')
-    picture = StringField('Picture')
+    picture = StringField('Picture URL')
     description = TextAreaField('Description')
     ingredients = TextAreaField('Ingredients')
     preparation = TextAreaField('Method')

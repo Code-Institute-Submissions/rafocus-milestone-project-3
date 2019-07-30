@@ -14,7 +14,7 @@
 <body>
     <div id="page-container">
         <div id="content-wrap">
-            <nav class="navbar navbar-expand-lg navbar-light" style="">
+            <nav class="navbar navbar-expand-lg navbar-light">
                 <div class="container">
                     <a class="navbar-brand mr-4" href="{{ url_for('home') }}">Cookbook</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
@@ -38,8 +38,9 @@
                             {% endif %}
                         </div>
                     </div>
+                </div>
             </nav>
-            <main role="main" class="container">
+            <main class="container">
                 <div class="row">
                     <div class="col">
                         {% with messages = get_flashed_messages(with_categories=true) %}

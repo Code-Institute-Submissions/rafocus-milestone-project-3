@@ -1,6 +1,6 @@
 {% extends "main.html" %}
 {% block content %}
-<form method="POST" action="" novalidate>
+<form method="POST" novalidate>
     <!-- this is to protect against cross site request forgery attacks -->
     {{ form.hidden_tag() }} 
     <div class="form-group">

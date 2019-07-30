@@ -1,55 +1,59 @@
 {% extends "main.html" %}
 {% block content %}
-<form class="mt-4" method="POST" action="" novalidate>
-    <!-- this is to protect against cross site request forgery attacks -->
-    {{ form.hidden_tag() }}
-    <div class="row">
-        <div class="col-md-4">
-            <div class="form-group">
-                {{ form.searchString.label(class="form-control-label") }}
-                {% if form.searchString.errors %}
-                {{ form.searchString(class="form-control is-invalid")}}
-                <div class="invalid-feedback">
-                    {% for error in form.searchString.errors %}
-                    <span>{{ error }}</span>
-                    {% endfor %}
+<div class="row justify-content-around">
+    <div class="col-8">
+        <form class="mt-4" method="POST" novalidate>
+            <!-- this is to protect against cross site request forgery attacks -->
+            {{ form.hidden_tag() }}
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        {{ form.searchString.label(class="form-control-label") }}
+                        {% if form.searchString.errors %}
+                        {{ form.searchString(class="form-control is-invalid")}}
+                        <div class="invalid-feedback">
+                            {% for error in form.searchString.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.searchString(class="form-control") }}
+                        {% endif %}
+                    </div>
                 </div>
-                {% else %}
-                {{ form.searchString(class="form-control") }}
-                {% endif %}
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                {{ form.searchField.label(class="form-control-label") }}
-                {% if form.searchField.errors %}
-                {{ form.searchField(class="form-control is-invalid")}}
-                <div class="invalid-feedback">
-                    {% for error in form.searchField.errors %}
-                    <span>{{ error }}</span>
-                    {% endfor %}
+                <div class="col-md-4">
+                    <div class="form-group">
+                        {{ form.searchField.label(class="form-control-label") }}
+                        {% if form.searchField.errors %}
+                        {{ form.searchField(class="form-control is-invalid")}}
+                        <div class="invalid-feedback">
+                            {% for error in form.searchField.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.searchField(class="form-control") }}
+                        {% endif %}
+                    </div>
                 </div>
-                {% else %}
-                {{ form.searchField(class="form-control") }}
-                {% endif %}
+        
             </div>
-        </div>
-
-    </div>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="form-group ">
-                {{ form.submit(class="btn btn-outline-secondary") }}
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group ">
+                        {{ form.submit(class="btn btn-outline-secondary") }}
+                    </div>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
-</form>
+</div>
 
 <div class="row mt-4">
     {% for recipe in recipes.items %}
-    <div class="col-4 p-2">
+    <div class="col-lg-4 col-md-6 p-2 d-flex justify-content-center">
         <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="{{ recipe.picture | default('https://dummyimage.com/300') }}" alt="...">
+            <img class="card-img-top" src="{{ recipe.picture }}" alt="image">
             <div class="card-body">
                 <h5 class="card-title font-weight-bold">{{ recipe.title }}</h5>
                 <p class="card-text">{{ recipe.description[:60] }}</p>

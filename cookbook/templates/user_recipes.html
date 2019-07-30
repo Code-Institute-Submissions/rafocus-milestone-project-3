@@ -1,12 +1,12 @@
 {% extends "main.html" %}
 {% block content %}
-<h1 class="m-4">Recipes by {{ user.username }} ({{ recipes.total }})</h1>
+<h1 class="m-4 user">Recipes by {{ user.username }} ({{ recipes.total }})</h1>
 
 <div class="row mt-4">
   {% for recipe in recipes.items %}
-  <div class="col-4 p-2">
+  <div class="col-4 p-2 d-flex justify-content-center">
     <div class="card" style="width: 18rem;">
-      <img class="card-img-top" src="{{ recipe.picture | default('https://dummyimage.com/300') }}" alt="...">
+      <img class="card-img-top" src="{{ recipe.picture | default('https://dummyimage.com/300') }}" alt="image">
       <div class="card-body">
         <h5 class="card-title font-weight-bold">{{ recipe.title }}</h5>
         <p class="card-text">{{ recipe.description[:60] }}</p>
