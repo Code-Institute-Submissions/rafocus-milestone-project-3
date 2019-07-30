@@ -5,17 +5,6 @@ from cookbook.forms import RegisterForm, LoginForm, RecipeForm, SearchForm
 from cookbook.models import User, Recipe
 from flask_login import login_user, current_user, logout_user, login_required
 
-
-
-# routes
-
-# @app.route("/")
-# @app.route("/home")
-# def home():
-#     page = request.args.get('page', 1, type=int) # 1 the initial value
-#     recipes = Recipe.query.order_by(Recipe.date.desc()).paginate(page=page, per_page=6)
-#     return render_template('home.html', recipes=recipes)
-
 @app.route("/")
 @app.route("/home", methods=['GET', 'POST'])
 def home():
@@ -139,20 +128,6 @@ def user_recipes(username):
         .order_by(Recipe.date.desc())\
         .paginate(page=page, per_page=6)
     return render_template('user_recipes.html', recipes=recipes, user=user)
-
-@app.route("/search", methods=['GET', 'POST'])
-def search():
-    recipes = None
-    page = request.args.get('page', 1, type=int)
-    form = SearchForm()
-    if form.validate_on_submit():
-        searchString = form.searchString.data
-        searchField = form.searchField.data
-        # retrieve the column name dynamicaly 
-        recipes = Recipe.query.filter(getattr(Recipe, searchField).contains(searchString))\
-        .order_by(Recipe.date.desc())\
-        .paginate(page=page, per_page=6)
-    return render_template('search.html', form=form, recipes=recipes)
 
 @app.errorhandler(404)
 def not_found(error):
