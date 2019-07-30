@@ -1,7 +1,54 @@
 {% extends "main.html" %}
 {% block content %}
-<div class="row mt-4">
+<form class="mt-4" method="POST" action="" novalidate>
+    <!-- this is to protect against cross site request forgery attacks -->
+    {{ form.hidden_tag() }}
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                {{ form.searchString.label(class="form-control-label") }}
+                {% if form.searchString.errors %}
+                {{ form.searchString(class="form-control is-invalid")}}
+                <div class="invalid-feedback">
+                    {% for error in form.searchString.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.searchString(class="form-control") }}
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                {{ form.searchField.label(class="form-control-label") }}
+                {% if form.searchField.errors %}
+                {{ form.searchField(class="form-control is-invalid")}}
+                <div class="invalid-feedback">
+                    {% for error in form.searchField.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.searchField(class="form-control") }}
+                {% endif %}
+            </div>
+        </div>
 
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group ">
+                {{ form.submit(class="btn btn-outline-secondary") }}
+            </div>
+        </div>
+    </div>
+
+
+
+</form>
+
+<div class="row mt-4">
     {% for recipe in recipes.items %}
     <div class="col-4 p-2">
         <div class="card" style="width: 18rem;">
@@ -13,7 +60,6 @@
                 <a href="{{ url_for('recipe', recipe_id=recipe.id) }}" class="btn btn-primary">View</a>
             </div>
         </div>
-
         {% if loop.index %3 == 0%}
     </div>
 </div>

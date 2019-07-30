@@ -9,12 +9,27 @@ from flask_login import login_user, current_user, logout_user, login_required
 
 # routes
 
+# @app.route("/")
+# @app.route("/home")
+# def home():
+#     page = request.args.get('page', 1, type=int) # 1 the initial value
+#     recipes = Recipe.query.order_by(Recipe.date.desc()).paginate(page=page, per_page=6)
+#     return render_template('home.html', recipes=recipes)
+
 @app.route("/")
-@app.route("/home")
+@app.route("/home", methods=['GET', 'POST'])
 def home():
-    page = request.args.get('page', 1, type=int) # 1 the initial value
+    page = request.args.get('page', 1, type=int)
     recipes = Recipe.query.order_by(Recipe.date.desc()).paginate(page=page, per_page=6)
-    return render_template('home.html', recipes=recipes)
+    form = SearchForm()
+    if form.validate_on_submit():
+        searchString = form.searchString.data
+        searchField = form.searchField.data
+        # retrieve the column name dynamicaly 
+        recipes = Recipe.query.filter(getattr(Recipe, searchField).contains(searchString))\
+        .order_by(Recipe.date.desc())\
+        .paginate(page=page, per_page=6)
+    return render_template('home.html', form=form, recipes=recipes)
 
 @app.route("/about")
 def about():
@@ -127,8 +142,6 @@ def search():
     page = request.args.get('page', 1, type=int)
     form = SearchForm()
     if form.validate_on_submit():
-        # user = User.query.filter_by(username=form.username.data).first()
-        # recipes = Recipe.query.filter_by(author=user)\
         searchString = form.searchString.data
         searchField = form.searchField.data
         # retrieve the column name dynamicaly 
