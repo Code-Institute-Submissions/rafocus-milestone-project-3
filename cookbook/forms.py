@@ -43,6 +43,7 @@ class RecipeForm(FlaskForm):
     submit = SubmitField('Create')
 
 class SearchForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
+    searchString = StringField('Search expression', validators=[DataRequired()])
+    searchField = SelectField('Search in:', choices=[('title','Title'), ('description','Description'), ('ingredients','Ingredients'), ('preparation','Method'), ('requirement','Allergy')])
     submit = SubmitField('Search')
 

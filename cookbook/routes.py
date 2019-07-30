@@ -127,8 +127,12 @@ def search():
     page = request.args.get('page', 1, type=int)
     form = SearchForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
-        recipes = Recipe.query.filter_by(author=user)\
+        # user = User.query.filter_by(username=form.username.data).first()
+        # recipes = Recipe.query.filter_by(author=user)\
+        searchString = form.searchString.data
+        searchField = form.searchField.data
+        # retrieve the column name dynamicaly 
+        recipes = Recipe.query.filter(getattr(Recipe, searchField).contains(searchString))\
         .order_by(Recipe.date.desc())\
         .paginate(page=page, per_page=6)
     return render_template('search.html', form=form, recipes=recipes)
