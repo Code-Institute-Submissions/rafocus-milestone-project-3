@@ -79,7 +79,7 @@ def myaccount():
 def new_recipe():
     form = RecipeForm()
     if form.validate_on_submit():
-        recipe = Recipe(title=form.title.data, cuisine=form.cuisine.data, description=form.description.data, picture=form.picture.data, requirement=form.requirement.data, preparation=form.preparation.data, author=current_user)
+        recipe = Recipe(title=form.title.data, cuisine=form.cuisine.data, description=form.description.data, picture=form.picture.data, requirement=form.requirement.data,ingredients=form.ingredients.data, preparation=form.preparation.data, author=current_user)
         db.session.add(recipe)
         db.session.commit()
         flash('New Recipe Created', 'success')
@@ -105,6 +105,8 @@ def edit_recipe(recipe_id):
         recipe.description = form.description.data
         recipe.preparation = form.preparation.data
         recipe.picture = form.picture.data
+        recipe.requirement = form.requirement.data
+        recipe.ingredients = form.ingredients.data
         db.session.commit()
         flash('Recipe updated', 'success')
         return redirect(url_for('recipe', recipe_id=recipe.id))
@@ -114,6 +116,8 @@ def edit_recipe(recipe_id):
         form.description.data = recipe.description
         form.preparation.data = recipe.preparation
         form.picture.data = recipe.picture
+        form.requirement.data = recipe.requirement
+        form.ingredients.data = recipe.ingredients
     return render_template('new_recipe.html', form=form)
 
 @app.route("/recipe/<int:recipe_id>/delete", methods=['POST'])

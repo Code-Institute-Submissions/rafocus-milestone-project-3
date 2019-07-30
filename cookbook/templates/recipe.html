@@ -45,7 +45,7 @@
         </div>
         <div class="region mt-4">
                 <h2>Method:</h2>
-                <p>{{ recipe.method }}</p>
+                <p>{{ recipe.requirement }}</p>
         </div>
         <div class="region mt-4">
                 <h2>Allergy / Intolerence:</h2>
@@ -56,23 +56,4 @@
         <img src="{{ recipe.picture }}" class="align-self-end mr-3" alt="..." height="200">
     </div>
 </div>
-<!-- <div class="media">
-    <div class="media-body">
-        <a class="text-muted"href="{{ url_for('user_recipes', username=recipe.author.username ) }}">view all recipes by {{ recipe.author.username }}</a>
-        <p class="text-muted">{{ recipe.date.strftime('%d-%m-%y') }}</p>
-        <h4 class="mt-4">{{ recipe.title }}</h4>
-        <h5>Description:</h5>
-        <p>{{ recipe.description }}</p>
-        <h5>Category:</h5>
-        <p>{{ recipe.category }}</p>
-        <h5>Allergy / Intolerence::</h5>
-        <p>{{ recipe.requirement }}</p>
-        <h5>Ingredients:</h5>
-        <p>{{ recipe.ingredients }}</p>
-        <h5>Method:</h5>
-        <p class="mb-0">{{ recipe.method }}</p>
-    </div>
-    <img src="{{ recipe.picture }}" class="align-self-end mr-3" alt="..." height="200">
-
-</div> -->
 {% endblock content %}
